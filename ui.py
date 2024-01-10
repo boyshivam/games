@@ -1,6 +1,7 @@
 from tkinter import *
 import html
 
+
 class QuizInterface:
 
     def __init__(self, quizbrain):
@@ -14,13 +15,13 @@ class QuizInterface:
         self.canvas2 = Canvas(width = 500,
                               height = 500,
                               bg = 'steelblue3')
-        self.canvas2.grid(row = 0, column = 0, columnspan= 2)
+        self.canvas2.grid(row = 0, column = 0, columnspan= 3)
 
         self.canvas1 = Canvas(width = 400,
                              height = 400,
                              bg="cadetblue1",
                              highlightthickness=0)
-        self.canvas1.grid(row = 0, column=0, columnspan=2)
+        self.canvas1.grid(row = 0, column=0, columnspan=3)
 
 
         #texts on canvas
@@ -37,6 +38,7 @@ class QuizInterface:
 
                                                      width = 350)
 
+
         #images
         correct_img = PhotoImage(file = "./images/true.png")
         wrong_img = PhotoImage(file = "./images/false.png")
@@ -47,14 +49,17 @@ class QuizInterface:
         self.true_b.grid(row = 1, column = 0, pady = 10)
 
         self.false_b = Button(image = wrong_img,command = self.false_pressed, highlightthickness = 0)
-        self.false_b.grid(row=1, column=1, pady = 10)
+        self.false_b.grid(row=1, column=2, pady = 10)
+
+        self.play_again_b = Button(text="play again", highlightthickness=0, bg = "#C1FFC1", fg = "black", width= 14, command = self.play_again)
+        self.play_again_b.grid(row = 1, column = 1)
 
 
         self.next_question()
 
         self.window.mainloop()
 
-    # this will retrive the next question from the quizbrain and display it
+    # this will retrieve the next question from the quizbrain and display it
     def next_question(self):
         self.canvas1.configure(bg = "cornsilk")
         if self.quizbrain.still_got_questions():
@@ -64,12 +69,14 @@ class QuizInterface:
             self.canvas1.itemconfig(self.question_text, text = f"'{question_text}'", font = ("Arial", 19, "bold"))
             self.canvas1.itemconfig(self.question_number_text, text = f"Question{question_number+1}:", font=("Courier", 23, "bold"))
         else:
-            self.canvas1.itemconfig(self.question_text, text = "Quiz is over!!!"
-                                                               f"\nYou have answered {self.quizbrain.score} questions out "
-                                                               f"of {len(self.quizbrain.q_list)} questions correctly.")
+            self.canvas1.itemconfig(self.question_number_text, text = "Quiz is Over!!!")
+            self.canvas1.itemconfig(self.question_text, text =
+                                                               f"\nYou have answered {self.quizbrain.score} questions  correctly out "
+                                                               f"of {len(self.quizbrain.q_list)} questions.")
 
             self.disable_butons()
 
+    # it will detect the true button being pressed and will compare with the correct answer
     def true_pressed(self):
         if self.quizbrain.check_answer(user_input="True"):
             self.canvas1.configure(bg="green")
@@ -82,6 +89,7 @@ class QuizInterface:
             self.window.after(1000, self.next_question)
 
 
+    # it will detect the false button being pressed and compare with the correct answer
     def false_pressed(self):
         if self.quizbrain.check_answer(user_input = "False"):
             self.canvas1.configure(bg = "green")
@@ -97,4 +105,10 @@ class QuizInterface:
     def disable_butons(self):
         self.true_b.config(state = DISABLED)
         self.false_b.config(state= DISABLED)
+
+
+    def play_again(self):
+        questionset.create_questions_set()
+
+
 

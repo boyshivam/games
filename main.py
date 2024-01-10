@@ -3,20 +3,32 @@ from Question_model import Question
 from quiz_brain import QuizBrain
 from ui import QuizInterface
 
+#This class creates questions set based on user preference
 
-questions_set = []
-questions_list =  QuestionList()
-list_of_q = questions_list.questions
+class QuestionSet:
 
 
-for q in list_of_q:
-    q_text = q['question']
-    q_answer = q['correct_answer']
-    question = Question(q_text, q_answer)
-    questions_set.append(question)
+    def create_questions_set(self):
+        questions_set = []
+        questions_list =  QuestionList()
+        list_of_q = questions_list.questions
 
-quizbrain = QuizBrain(questions_set)
-quizui = QuizInterface(quizbrain)
+
+        for q in list_of_q:
+            q_text = q['question']
+            q_answer = q['correct_answer']
+            question = Question(q_text, q_answer)
+            questions_set.append(question)
+
+        quizbrain = QuizBrain(questions_set)
+        quizui = QuizInterface(quizbrain)
+
+quiz = QuestionSet()
+quiz.create_questions_set()
+
+
+
+
 
 
 

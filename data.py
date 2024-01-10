@@ -18,13 +18,21 @@ class QuestionList:
     # how many questions you want
     def amount(self):
         amount = input("Enter the number of questions you want(upto 30): ")
-        return amount
+        if amount.isdigit():
+            return amount
+        else:
+            print("Enter digits only.")
+            return
 
 
     # select difficulty of the questions
     def difficulty(self):
-        select_difficulty = input("Enter difficulty between easy, medium and hard.")
-        return select_difficulty
+        select_difficulty = input("Enter difficulty between 'easy', 'medium' and 'hard'.").lower()
+        if select_difficulty == "easy" or select_difficulty == 'medium' or select_difficulty == 'hard':
+            return select_difficulty
+        else:
+            print("Select from the given options only.")
+            return
 
     # select catergory of question
     def catergory(self):
@@ -46,9 +54,5 @@ class QuestionList:
         select_catergory = input(f"Enter the catergory from the following options:\n{options}").title()
         item_num = catergories[select_catergory]
         return item_num
-
-
-
-
 
 
